@@ -12,7 +12,7 @@ Projeto Chat em Navegador
 ...
 Qual é o objetivo?
 
-O LAN Chat é um chat simples para conversar com amigos e colegas direto entre computadores, enviando mensagens e imagens sem criar conta e sem um servidor guardando suas conversas. Nasceu como um projeto de estudo de redes e JavaScript, com visual inspirado no Discord.
+O Projeto Chat é um chat simples para conversar com amigos e colegas direto entre computadores, enviando mensagens e imagens sem criar conta e sem um servidor guardando suas conversas. Nasceu como um projeto de estudo de redes e JavaScript, com visual inspirado no Discord.
 Como funciona?
 
 Cada pessoa recebe um ID. Quando você conecta no ID de alguém, seu navegador abre uma conexão direta (WebRTC) com o dele. As mensagens e imagens vão direto de um para o outro. Um servidor público só ajuda os dois a se encontrarem no começo. O histórico fica salvo no seu próprio navegador.
