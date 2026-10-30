@@ -358,7 +358,7 @@ function refresh() {
   renderContacts();
   renderHeader();
   const total = Object.values(state.contacts).reduce((n, c) => n + (c.unread || 0), 0);
-  document.title = (total ? `(${total}) ` : "") + "LAN Chat";
+  document.title = (total ? `(${total}) ` : "") + "Projeto Chat";
 }
 
 function renderContacts() {
