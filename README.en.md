@@ -1,6 +1,6 @@
 What is it for?
 
-LAN Chat is a simple chat to talk with friends and coworkers directly between computers, sending messages and images with no account and no server storing your conversations. It started as a study project about networking and JavaScript, with a look inspired by Discord.
+Chat Project is a simple chat to talk with friends and coworkers directly between computers, sending messages and images with no account and no server storing your conversations. It started as a study project about networking and JavaScript, with a look inspired by Discord.
 How does it work?
 
 Each person gets an ID. When you connect to someone's ID, your browser opens a direct connection (WebRTC) to theirs. Messages and images travel straight from one to the other. A public server only helps the two of you find each other at the start. Your history is saved in your own browser.
