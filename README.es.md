@@ -1,6 +1,6 @@
 ¿Para qué sirve?
 
-LAN Chat es un chat sencillo para conversar con amigos y compañeros directamente entre computadoras, enviando mensajes e imágenes sin crear cuenta y sin un servidor que guarde tus conversaciones. Nació como un proyecto de estudio de redes y JavaScript, con un aspecto inspirado en Discord.
+Projeto Chat es un chat sencillo para conversar con amigos y compañeros directamente entre computadoras, enviando mensajes e imágenes sin crear cuenta y sin un servidor que guarde tus conversaciones. Nació como un proyecto de estudio de redes y JavaScript, con un aspecto inspirado en Discord.
 ¿Cómo funciona?
 
 Cada persona recibe un ID. Cuando te conectas al ID de alguien, tu navegador abre una conexión directa (WebRTC) con el suyo. Los mensajes y las imágenes van directo de uno a otro. Un servidor público solo ayuda a que ambos se encuentren al comienzo. El historial se guarda en tu propio navegador.
