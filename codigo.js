@@ -18,7 +18,8 @@ const I18N = {
     storageFull: "O armazenamento do navegador está cheio. Novas mensagens não serão salvas. Exclua conversas com muitas imagens.",
     acceptConn: "{who} ({id}) quer conversar com você. Aceitar?",
     pickFirst: "Selecione um contato primeiro.",
-    contactOffline: "Esse contato está offline. A mensagem só pode ser enviada quando ele estiver com a página aberta.",
+    contactOffline: "Esse contato está offline. Os dois precisam estar com a página aberta e ele precisa ter aceitado a conexão. Estou tentando reconectar agora; tente de novo em alguns segundos.",
+    peerNotFound: "Não encontrei esse ID agora. Confira se está certo e se seu amigo está com a página aberta. Vou continuar tentando a cada poucos segundos.",
     notImage: "Escolha um arquivo de imagem.", imgReadFail: "Não foi possível ler essa imagem.",
     askId: "ID do seu amigo (aparece no topo da página dele):",
     ownId: "Esse é o seu próprio ID.", badId: "ID inválido.",
@@ -33,7 +34,7 @@ const I18N = {
     steps: [
       "Copie seu ID no topo da página e envie para o seu amigo (por qualquer aplicativo).",
       "Peça o ID dele e clique em \"{btn}\".",
-      "Cole o ID, dê um apelido (opcional) e confirme.",
+      "Cole o ID, dê um apelido (opcional) e confirme. Seu amigo vai ver um aviso perguntando se aceita, e precisa clicar em OK.",
       "Quando a bolinha do contato ficar verde, ele está online. Escolha o contato e converse.",
       "Use o clipe 📎 para enviar imagens. Clique com o botão direito em um contato para excluí-lo."
     ],
@@ -42,7 +43,8 @@ const I18N = {
       "Os dois precisam estar com a página aberta para trocar mensagens.",
       "Não existe descoberta automática de contatos. A troca de IDs faz esse papel.",
       "O histórico fica salvo só neste navegador. Limpar os dados do site apaga tudo.",
-      "Em redes muito restritas a conexão pode falhar."
+      "Em redes muito restritas a conexão pode falhar.",
+      "Se a bolinha não ficar verde: confira se o ID está certo, se os dois estão com a página aberta e se o topo mostra \"Pronto para conversar\". Abra o site pelo endereço do GitHub Pages, não pelo arquivo no computador."
     ],
     privacyTitle: "Privacidade",
     privacy: "As mensagens não passam por servidor, mas o servidor de apresentação enxerga os IDs e os endereços de rede de quem conecta. Não compartilhe seu ID com quem você não conhece: quem tiver seu ID pode pedir para conversar (você sempre pode recusar)."
@@ -66,7 +68,8 @@ const I18N = {
     storageFull: "Browser storage is full. New messages will not be saved. Delete conversations with many images.",
     acceptConn: "{who} ({id}) wants to chat with you. Accept?",
     pickFirst: "Select a contact first.",
-    contactOffline: "This contact is offline. Messages can only be sent while they have the page open.",
+    contactOffline: "This contact is offline. You both need the page open, and they must have accepted the connection. Trying to reconnect now; try again in a few seconds.",
+    peerNotFound: "I couldn't find that ID right now. Check it is correct and your friend has the page open. I will keep trying every few seconds.",
     notImage: "Choose an image file.", imgReadFail: "Could not read that image.",
     askId: "Your friend's ID (shown at the top of their page):",
     ownId: "That is your own ID.", badId: "Invalid ID.",
@@ -81,7 +84,7 @@ const I18N = {
     steps: [
       "Copy your ID at the top of the page and send it to your friend (through any app).",
       "Ask for their ID and click \"{btn}\".",
-      "Paste the ID, give them a nickname (optional) and confirm.",
+      "Paste the ID, give them a nickname (optional) and confirm. Your friend will see a prompt asking to accept, and must click OK.",
       "When the contact's dot turns green, they are online. Pick the contact and start chatting.",
       "Use the paperclip 📎 to send images. Right-click a contact to delete it."
     ],
@@ -90,7 +93,8 @@ const I18N = {
       "Both people need to have the page open to exchange messages.",
       "There is no automatic contact discovery. Exchanging IDs takes its place.",
       "History is stored only in this browser. Clearing the site's data erases everything.",
-      "On very restrictive networks the connection may fail."
+      "On very restrictive networks the connection may fail.",
+      "If the dot does not turn green: check the ID is right, that you both have the page open, and that the top shows \"Ready to chat\". Open the site from its GitHub Pages address, not from the file on your computer."
     ],
     privacyTitle: "Privacy",
     privacy: "Messages do not go through a server, but the introduction server can see the IDs and network addresses of whoever connects. Do not share your ID with people you don't know: anyone with your ID can ask to chat (you can always decline)."
@@ -114,13 +118,14 @@ const I18N = {
     storageFull: "El almacenamiento del navegador está lleno. Los mensajes nuevos no se guardarán. Elimina conversaciones con muchas imágenes.",
     acceptConn: "{who} ({id}) quiere conversar contigo. ¿Aceptar?",
     pickFirst: "Selecciona un contacto primero.",
-    contactOffline: "Este contacto está sin conexión. El mensaje solo se puede enviar cuando tenga la página abierta.",
+    contactOffline: "Este contacto está sin conexión. Los dos necesitan tener la página abierta y él debe haber aceptado la conexión. Intentando reconectar ahora; prueba de nuevo en unos segundos.",
+    peerNotFound: "No encontré ese ID ahora. Revisa que sea correcto y que tu amigo tenga la página abierta. Seguiré intentando cada pocos segundos.",
     notImage: "Elige un archivo de imagen.", imgReadFail: "No se pudo leer esa imagen.",
     askId: "ID de tu amigo (aparece arriba en su página):",
     ownId: "Ese es tu propio ID.", badId: "ID no válido.",
     askNick: "¿Cómo quieres llamar a este contacto? (opcional)",
     confirmDelete: "¿Eliminar '{name}'? Esto también borra el historial de la conversación.",
-    helpTitle: "Cómo usar o Chat",
+    helpTitle: "Cómo usar Chat",
     goalTitle: "¿Para qué sirve?",
     goal: "Projeto Chat es un chat sencillo para conversar con amigos y compañeros directamente entre computadoras, enviando mensajes e imágenes sin crear cuenta y sin un servidor que guarde tus conversaciones. Nació como un proyecto de estudio de redes y JavaScript, con un aspecto inspirado en Discord.",
     howTitle: "¿Cómo funciona?",
@@ -129,7 +134,7 @@ const I18N = {
     steps: [
       "Copia tu ID en la parte superior de la página y envíaselo a tu amigo (por cualquier aplicación).",
       "Pídele su ID y haz clic en \"{btn}\".",
-      "Pega el ID, ponle un apodo (opcional) y confirma.",
+      "Pega el ID, ponle un apodo (opcional) y confirma. Tu amigo verá un aviso preguntando si acepta, y debe hacer clic en OK.",
       "Cuando el punto del contacto se ponga verde, está en línea. Elige el contacto y conversa.",
       "Usa el clip 📎 para enviar imágenes. Haz clic derecho en un contacto para eliminarlo."
     ],
@@ -138,18 +143,26 @@ const I18N = {
       "Las dos personas necesitan tener la página abierta para intercambiar mensajes.",
       "No hay descubrimiento automático de contactos. El intercambio de IDs ocupa ese lugar.",
       "El historial se guarda solo en este navegador. Borrar los datos del sitio elimina todo.",
-      "En redes muy restrictivas la conexión puede fallar."
+      "En redes muy restrictivas la conexión puede fallar.",
+      "Si el punto no se pone verde: revisa que el ID sea correcto, que los dos tengan la página abierta y que arriba diga \"Listo para conversar\". Abre el sitio desde su dirección de GitHub Pages, no desde el archivo en tu computadora."
     ],
     privacyTitle: "Privacidad",
     privacy: "Los mensajes no pasan por un servidor, pero el servidor de presentación puede ver los IDs y las direcciones de red de quien se conecta. No compartas tu ID con personas que no conoces: quien tenga tu ID puede pedir conversar (siempre puedes rechazar)."
   }
 };
-const LOCALES = { pt: "pt-BR", en: "en-US", es: "es-ES" };   
+const LOCALES = { pt: "pt-BR", en: "en-US", es: "es-ES" };
 
 const KEY = "lanchat.v1";
-const MAX_TEXT = 2000;      
-const IMG_MAX = 800;        
-const RETRY_MS = 20000;     
+const MAX_TEXT = 2000;
+const IMG_MAX = 800;
+const RETRY_MS = 10000;
+const RETRY_GAP = 8000;
+
+const TURN_URL = "";
+const STUN = [
+  { urls: "stun:stun.l.google.com:19302" },
+  { urls: "stun:stun1.l.google.com:19302" }
+];
 
 const $ = id => document.getElementById(id);
 const list = $("contactList"), box = $("messages"), helpDlg = $("helpDialog");
@@ -197,9 +210,9 @@ save();
 const now = () =>
   new Date().toLocaleTimeString(LOCALES[lang], { hour: "2-digit", minute: "2-digit", hour12: false });
 
-let current = null;   
-let peer = null; 
-const conns = {}; 
+let current = null;
+let peer = null;
+const conns = {};
 const isOnline = id => !!(conns[id] && conns[id].open);
 
 let statusInfo = { key: "statusStarting", ok: false, vars: null };
@@ -213,7 +226,15 @@ function renderStatus() {
 function startPeer() {
   if (typeof Peer === "undefined") { setStatus("statusNoLib", false); return; }
   setStatus("statusConnecting", false);
-  peer = new Peer(state.peerId);
+  if (!TURN_URL) { createPeer(STUN); return; }
+  fetch(TURN_URL)
+    .then(r => r.json())
+    .then(turn => createPeer(Array.isArray(turn) ? STUN.concat(turn) : STUN))
+    .catch(() => createPeer(STUN));
+}
+
+function createPeer(iceServers) {
+  peer = new Peer(state.peerId, { config: { iceServers } });
   peer.on("open", () => { setStatus("statusReady", true); connectAllSaved(); });
   peer.on("connection", conn => setupConn(conn, true));
   peer.on("disconnected", () => {
@@ -221,20 +242,32 @@ function startPeer() {
     setTimeout(() => { if (peer && !peer.destroyed) peer.reconnect(); }, 3000);
   });
   peer.on("error", err => {
-    if (err.type === "peer-unavailable") return;   
+    if (err.type === "peer-unavailable") {
+      if (watchId && Date.now() < watchUntil && String(err.message).includes(watchId)) {
+        watchId = null;
+        alert(t("peerNotFound"));
+      }
+      return;
+    }
     if (err.type === "unavailable-id") setStatus("statusIdInUse", false);
     else setStatus("statusError", false, { type: err.type });
   });
 }
 
-function connectTo(id) {
+let watchId = null, watchUntil = 0;
+const lastTry = {};
+
+function connectTo(id, force) {
   if (!peer || !peer.open || id === state.peerId || isOnline(id)) return;
+  const nowMs = Date.now();
+  if (!force && lastTry[id] && nowMs - lastTry[id] < RETRY_GAP) return;
+  lastTry[id] = nowMs;
   const conn = peer.connect(id, { reliable: true, metadata: { name: state.name } });
   setupConn(conn, false);
 }
 
 function connectAllSaved() {
-  Object.keys(state.contacts).forEach(id => { if (state.peerId < id) connectTo(id); });
+  Object.keys(state.contacts).forEach(id => connectTo(id));
 }
 setInterval(() => { if (peer && peer.open) connectAllSaved(); }, RETRY_MS);
 
@@ -308,7 +341,7 @@ function addMessage(id, msg) {
 function sendMessage(msg) {
   if (!current) { alert(t("pickFirst")); return false; }
   const conn = conns[current];
-  if (!conn || !conn.open) { alert(t("contactOffline")); return false; }
+  if (!conn || !conn.open) { connectTo(current, true); alert(t("contactOffline")); return false; }
   conn.send(msg.type === "image" ? { type: "image", data: msg.data } : { type: "text", text: msg.text });
   addMessage(current, msg);
   return true;
@@ -518,7 +551,8 @@ $("addBtn").onclick = () => {
   const c = ensureContact(id, nick, !!nick);
   if (nick) { c.name = nick; c.custom = true; }
   save();
-  connectTo(id);
+  watchId = id; watchUntil = Date.now() + 10000;
+  connectTo(id, true);
   selectContact(id);
 };
 
