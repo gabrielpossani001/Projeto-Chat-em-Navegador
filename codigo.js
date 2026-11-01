@@ -1,171 +1,171 @@
 const I18N = {
   pt: {
-    idLabel: "Seu ID:", copy: "Copiar", copied: "Copiado!", copyPrompt: "Copie seu ID:",
-    contacts: "Contatos", addBtn: "+ Conectar por ID", help: "Como usar",
+    contacts: "Contatos", rooms: "Salas", addBtn: "+ Entrar numa sala", help: "Como usar",
     attach: "Enviar imagem", placeholder: "Digite uma mensagem...", send: "Enviar",
     deleteContact: "Excluir contato", close: "Fechar",
-    noContacts: "Nenhum contato ainda. Clique em \"{btn}\" e cole o ID do seu amigo.",
+    noContacts: "Nenhum contato ainda. Clique em \"{btn}\" e entre na mesma sala que o seu amigo.",
+    noRooms: "Nenhuma sala ainda.",
     pickContact: "Selecione um contato para conversar",
     pickContactBody: "Escolha um contato na lista para ver a conversa.",
     noMessages: "Nenhuma mensagem ainda. Escreva a primeira.",
     online: "online", offline: "offline", imgAlt: "Imagem enviada",
-    statusStarting: "Iniciando...", statusConnecting: "Conectando ao servidor...",
-    statusReady: "Pronto para conversar", statusReconnecting: "Reconectando...",
-    statusNoLib: "Biblioteca PeerJS não carregou (sem internet?)",
-    statusIdInUse: "Seu ID já está em uso (outra aba aberta?)",
-    statusError: "Erro de conexão: {type}",
+    statusStarting: "Iniciando...", statusConnecting: "Conectando aos servidores...",
+    statusReady: "Pronto para conversar", statusNoRooms: "Entre em uma sala para começar",
+    statusNoLib: "O arquivo trystero.js não carregou (ausente ou bloqueado?)",
+    statusBlocked: "Não consegui falar com os servidores de apresentação. Pode ser bloqueador de anúncios, firewall ou rede.",
+    statusJoinError: "Sala \"{room}\": a senha pode estar diferente ou a rede bloqueia a conexão direta.",
     askName: "Seu nome (seus contatos vão ver):", anon: "Anônimo",
     storageFull: "O armazenamento do navegador está cheio. Novas mensagens não serão salvas. Exclua conversas com muitas imagens.",
-    acceptConn: "{who} ({id}) quer conversar com você. Aceitar?",
     pickFirst: "Selecione um contato primeiro.",
-    contactOffline: "Esse contato está offline. Os dois precisam estar com a página aberta e ele precisa ter aceitado a conexão. Estou tentando reconectar agora; tente de novo em alguns segundos.",
-    peerNotFound: "Não encontrei esse ID agora. Confira se está certo e se seu amigo está com a página aberta. Vou continuar tentando a cada poucos segundos.",
+    contactOffline: "Esse contato está offline. Os dois precisam estar com a página aberta e na mesma sala.",
     notImage: "Escolha um arquivo de imagem.", imgReadFail: "Não foi possível ler essa imagem.",
-    askId: "ID do seu amigo (aparece no topo da página dele):",
-    ownId: "Esse é o seu próprio ID.", badId: "ID inválido.",
-    askNick: "Como quer chamar esse contato? (opcional)",
+    askRoom: "Nome da sala (combine com seu amigo; os dois precisam digitar igual):",
+    askRoomPass: "Senha da sala (combine com seu amigo; só quem souber a senha entra):",
+    roomNeedsPass: "Informe uma senha. Sem senha a sala não fica protegida.",
+    roomExists: "Você já está nessa sala.",
+    leaveRoom: "Sair da sala {name}",
+    confirmLeaveRoom: "Sair da sala '{name}'? Os contatos e conversas continuam salvos.",
     confirmDelete: "Excluir '{name}'? Isso apaga o histórico da conversa também.",
     helpTitle: "Como usar o Chat",
     goalTitle: "Qual é o objetivo?",
     goal: "O Projeto Chat é um chat simples para conversar com amigos e colegas direto entre computadores, enviando mensagens e imagens sem criar conta e sem um servidor guardando suas conversas. Nasceu como um projeto de estudo de redes e JavaScript, com visual inspirado no Discord.",
     howTitle: "Como funciona?",
-    how: "Cada pessoa recebe um ID. Quando você conecta no ID de alguém, seu navegador abre uma conexão direta (WebRTC) com o dele. As mensagens e imagens vão direto de um para o outro. Um servidor público só ajuda os dois a se encontrarem no começo. O histórico fica salvo no seu próprio navegador.",
+    how: "Você e seu amigo entram na mesma sala, com o mesmo nome e a mesma senha. Quem estiver na sala aparece na sua lista de contatos, e seu navegador abre uma conexão direta (WebRTC) com o dele. As mensagens e imagens vão direto de um para o outro. Servidores públicos só ajudam vocês a se encontrarem no começo. O histórico fica salvo no seu próprio navegador.",
     stepsTitle: "Passo a passo",
     steps: [
-      "Copie seu ID no topo da página e envie para o seu amigo (por qualquer aplicativo).",
-      "Peça o ID dele e clique em \"{btn}\".",
-      "Cole o ID, dê um apelido (opcional) e confirme. Seu amigo vai ver um aviso perguntando se aceita, e precisa clicar em OK.",
-      "Quando a bolinha do contato ficar verde, ele está online. Escolha o contato e converse.",
+      "Combine com seu amigo um nome de sala e uma senha (por qualquer aplicativo).",
+      "Clique em \"{btn}\" e digite o nome e a senha.",
+      "Seu amigo faz o mesmo, com o mesmo nome e a mesma senha.",
+      "Quando ele aparecer na lista com a bolinha verde, está online. Escolha o contato e converse.",
       "Use o clipe 📎 para enviar imagens. Clique com o botão direito em um contato para excluí-lo."
     ],
     limitsTitle: "Bom saber",
     limits: [
       "Os dois precisam estar com a página aberta para trocar mensagens.",
-      "Não existe descoberta automática de contatos. A troca de IDs faz esse papel.",
+      "Os contatos aparecem sozinhos, mas só para quem entrou na mesma sala com a mesma senha.",
       "O histórico fica salvo só neste navegador. Limpar os dados do site apaga tudo.",
-      "Em redes muito restritas a conexão pode falhar.",
-      "Se a bolinha não ficar verde: confira se o ID está certo, se os dois estão com a página aberta e se o topo mostra \"Pronto para conversar\". Abra o site pelo endereço do GitHub Pages, não pelo arquivo no computador."
+      "Em redes muito restritas, ou com extensões que desligam o WebRTC, a conexão pode falhar. Se isso acontecer, aparece um aviso no topo da página.",
+      "Se o contato não aparecer: confira se o nome e a senha da sala são exatamente iguais nos dois lados (maiúsculas contam), se os dois estão com a página aberta e se o topo mostra \"Pronto para conversar\". Abra o site pelo endereço do GitHub Pages, não pelo arquivo no computador."
     ],
     privacyTitle: "Privacidade",
-    privacy: "As mensagens não passam por servidor, mas o servidor de apresentação enxerga os IDs e os endereços de rede de quem conecta. Não compartilhe seu ID com quem você não conhece: quem tiver seu ID pode pedir para conversar (você sempre pode recusar)."
+    privacy: "As mensagens vão direto entre os navegadores, criptografadas, e não passam por um servidor. Os servidores públicos de apresentação conseguem ver que existe uma sala e os endereços de rede de quem conecta. Use uma senha que só vocês conhecem: quem souber o nome e a senha da sala entra nela."
   },
   en: {
-    idLabel: "Your ID:", copy: "Copy", copied: "Copied!", copyPrompt: "Copy your ID:",
-    contacts: "Contacts", addBtn: "+ Connect by ID", help: "How to use",
+    contacts: "Contacts", rooms: "Rooms", addBtn: "+ Join a room", help: "How to use",
     attach: "Send image", placeholder: "Type a message...", send: "Send",
     deleteContact: "Delete contact", close: "Close",
-    noContacts: "No contacts yet. Click \"{btn}\" and paste your friend's ID.",
+    noContacts: "No contacts yet. Click \"{btn}\" and join the same room as your friend.",
+    noRooms: "No rooms yet.",
     pickContact: "Select a contact to chat",
     pickContactBody: "Choose a contact from the list to see the conversation.",
     noMessages: "No messages yet. Write the first one.",
     online: "online", offline: "offline", imgAlt: "Image sent",
-    statusStarting: "Starting...", statusConnecting: "Connecting to server...",
-    statusReady: "Ready to chat", statusReconnecting: "Reconnecting...",
-    statusNoLib: "PeerJS library failed to load (no internet?)",
-    statusIdInUse: "Your ID is already in use (another tab open?)",
-    statusError: "Connection error: {type}",
+    statusStarting: "Starting...", statusConnecting: "Connecting to servers...",
+    statusReady: "Ready to chat", statusNoRooms: "Join a room to start",
+    statusNoLib: "trystero.js failed to load (missing or blocked?)",
+    statusBlocked: "I couldn't reach the introduction servers. It may be an ad blocker, a firewall or the network.",
+    statusJoinError: "Room \"{room}\": the password may differ or the network blocks direct connections.",
     askName: "Your name (your contacts will see it):", anon: "Anonymous",
     storageFull: "Browser storage is full. New messages will not be saved. Delete conversations with many images.",
-    acceptConn: "{who} ({id}) wants to chat with you. Accept?",
     pickFirst: "Select a contact first.",
-    contactOffline: "This contact is offline. You both need the page open, and they must have accepted the connection. Trying to reconnect now; try again in a few seconds.",
-    peerNotFound: "I couldn't find that ID right now. Check it is correct and your friend has the page open. I will keep trying every few seconds.",
+    contactOffline: "This contact is offline. You both need the page open and to be in the same room.",
     notImage: "Choose an image file.", imgReadFail: "Could not read that image.",
-    askId: "Your friend's ID (shown at the top of their page):",
-    ownId: "That is your own ID.", badId: "Invalid ID.",
-    askNick: "What do you want to call this contact? (optional)",
+    askRoom: "Room name (agree with your friend; you both must type it exactly the same):",
+    askRoomPass: "Room password (agree with your friend; only people who know it can join):",
+    roomNeedsPass: "Enter a password. Without one the room is not protected.",
+    roomExists: "You are already in that room.",
+    leaveRoom: "Leave room {name}",
+    confirmLeaveRoom: "Leave room '{name}'? Contacts and conversations stay saved.",
     confirmDelete: "Delete '{name}'? This also erases the conversation history.",
     helpTitle: "How to use Chat",
     goalTitle: "What is it for?",
     goal: "Chat Project is a simple chat to talk with friends and coworkers directly between computers, sending messages and images with no account and no server storing your conversations. It started as a study project about networking and JavaScript, with a look inspired by Discord.",
     howTitle: "How does it work?",
-    how: "Each person gets an ID. When you connect to someone's ID, your browser opens a direct connection (WebRTC) to theirs. Messages and images travel straight from one to the other. A public server only helps the two of you find each other at the start. Your history is saved in your own browser.",
+    how: "You and your friend join the same room, with the same name and password. Everyone in the room shows up in your contact list, and your browser opens a direct connection (WebRTC) to theirs. Messages and images travel straight from one to the other. Public servers only help you find each other at the start. Your history is saved in your own browser.",
     stepsTitle: "Step by step",
     steps: [
-      "Copy your ID at the top of the page and send it to your friend (through any app).",
-      "Ask for their ID and click \"{btn}\".",
-      "Paste the ID, give them a nickname (optional) and confirm. Your friend will see a prompt asking to accept, and must click OK.",
-      "When the contact's dot turns green, they are online. Pick the contact and start chatting.",
+      "Agree with your friend on a room name and a password (through any app).",
+      "Click \"{btn}\" and type the name and the password.",
+      "Your friend does the same, with the same name and the same password.",
+      "When they show up in the list with a green dot, they are online. Pick the contact and start chatting.",
       "Use the paperclip 📎 to send images. Right-click a contact to delete it."
     ],
     limitsTitle: "Good to know",
     limits: [
       "Both people need to have the page open to exchange messages.",
-      "There is no automatic contact discovery. Exchanging IDs takes its place.",
+      "Contacts show up on their own, but only for people who joined the same room with the same password.",
       "History is stored only in this browser. Clearing the site's data erases everything.",
-      "On very restrictive networks the connection may fail.",
-      "If the dot does not turn green: check the ID is right, that you both have the page open, and that the top shows \"Ready to chat\". Open the site from its GitHub Pages address, not from the file on your computer."
+      "On very restrictive networks, or with extensions that turn WebRTC off, the connection may fail. If that happens, a notice appears at the top of the page.",
+      "If the contact does not show up: check that the room name and password are exactly the same on both sides (case matters), that you both have the page open, and that the top shows \"Ready to chat\". Open the site from its GitHub Pages address, not from the file on your computer."
     ],
     privacyTitle: "Privacy",
-    privacy: "Messages do not go through a server, but the introduction server can see the IDs and network addresses of whoever connects. Do not share your ID with people you don't know: anyone with your ID can ask to chat (you can always decline)."
+    privacy: "Messages go straight between browsers, encrypted, and do not pass through a server. The public introduction servers can see that a room exists and the network addresses of whoever connects. Use a password only you two know: anyone who knows the room name and password can join it."
   },
   es: {
-    idLabel: "Tu ID:", copy: "Copiar", copied: "¡Copiado!", copyPrompt: "Copia tu ID:",
-    contacts: "Contactos", addBtn: "+ Conectar por ID", help: "Cómo usar",
+    contacts: "Contactos", rooms: "Salas", addBtn: "+ Entrar en una sala", help: "Cómo usar",
     attach: "Enviar imagen", placeholder: "Escribe un mensaje...", send: "Enviar",
     deleteContact: "Eliminar contacto", close: "Cerrar",
-    noContacts: "Aún no hay contactos. Haz clic en \"{btn}\" y pega el ID de tu amigo.",
+    noContacts: "Aún no hay contactos. Haz clic en \"{btn}\" y entra en la misma sala que tu amigo.",
+    noRooms: "Aún no hay salas.",
     pickContact: "Selecciona un contacto para conversar",
     pickContactBody: "Elige un contacto de la lista para ver la conversación.",
     noMessages: "Aún no hay mensajes. Escribe el primero.",
     online: "en línea", offline: "sin conexión", imgAlt: "Imagen enviada",
-    statusStarting: "Iniciando...", statusConnecting: "Conectando al servidor...",
-    statusReady: "Listo para conversar", statusReconnecting: "Reconectando...",
-    statusNoLib: "No se cargó la biblioteca PeerJS (¿sin internet?)",
-    statusIdInUse: "Tu ID ya está en uso (¿otra pestaña abierta?)",
-    statusError: "Error de conexión: {type}",
+    statusStarting: "Iniciando...", statusConnecting: "Conectando a los servidores...",
+    statusReady: "Listo para conversar", statusNoRooms: "Entra en una sala para empezar",
+    statusNoLib: "No se cargó trystero.js (¿falta o está bloqueado?)",
+    statusBlocked: "No pude comunicarme con los servidores de presentación. Puede ser un bloqueador de anuncios, un firewall o la red.",
+    statusJoinError: "Sala \"{room}\": la contraseña puede ser distinta o la red bloquea la conexión directa.",
     askName: "Tu nombre (tus contactos lo verán):", anon: "Anónimo",
     storageFull: "El almacenamiento del navegador está lleno. Los mensajes nuevos no se guardarán. Elimina conversaciones con muchas imágenes.",
-    acceptConn: "{who} ({id}) quiere conversar contigo. ¿Aceptar?",
     pickFirst: "Selecciona un contacto primero.",
-    contactOffline: "Este contacto está sin conexión. Los dos necesitan tener la página abierta y él debe haber aceptado la conexión. Intentando reconectar ahora; prueba de nuevo en unos segundos.",
-    peerNotFound: "No encontré ese ID ahora. Revisa que sea correcto y que tu amigo tenga la página abierta. Seguiré intentando cada pocos segundos.",
+    contactOffline: "Este contacto está sin conexión. Los dos necesitan tener la página abierta y estar en la misma sala.",
     notImage: "Elige un archivo de imagen.", imgReadFail: "No se pudo leer esa imagen.",
-    askId: "ID de tu amigo (aparece arriba en su página):",
-    ownId: "Ese es tu propio ID.", badId: "ID no válido.",
-    askNick: "¿Cómo quieres llamar a este contacto? (opcional)",
+    askRoom: "Nombre de la sala (acuérdalo con tu amigo; los dos deben escribirlo igual):",
+    askRoomPass: "Contraseña de la sala (acuérdala con tu amigo; solo entra quien la sepa):",
+    roomNeedsPass: "Escribe una contraseña. Sin ella la sala no está protegida.",
+    roomExists: "Ya estás en esa sala.",
+    leaveRoom: "Salir de la sala {name}",
+    confirmLeaveRoom: "¿Salir de la sala '{name}'? Los contactos y conversaciones siguen guardados.",
     confirmDelete: "¿Eliminar '{name}'? Esto también borra el historial de la conversación.",
     helpTitle: "Cómo usar Chat",
     goalTitle: "¿Para qué sirve?",
     goal: "Projeto Chat es un chat sencillo para conversar con amigos y compañeros directamente entre computadoras, enviando mensajes e imágenes sin crear cuenta y sin un servidor que guarde tus conversaciones. Nació como un proyecto de estudio de redes y JavaScript, con un aspecto inspirado en Discord.",
     howTitle: "¿Cómo funciona?",
-    how: "Cada persona recibe un ID. Cuando te conectas al ID de alguien, tu navegador abre una conexión directa (WebRTC) con el suyo. Los mensajes y las imágenes van directo de uno a otro. Un servidor público solo ayuda a que ambos se encuentren al comienzo. El historial se guarda en tu propio navegador.",
+    how: "Tú y tu amigo entran en la misma sala, con el mismo nombre y la misma contraseña. Quien esté en la sala aparece en tu lista de contactos, y tu navegador abre una conexión directa (WebRTC) con el suyo. Los mensajes y las imágenes van directo de uno a otro. Los servidores públicos solo les ayudan a encontrarse al comienzo. El historial se guarda en tu propio navegador.",
     stepsTitle: "Paso a paso",
     steps: [
-      "Copia tu ID en la parte superior de la página y envíaselo a tu amigo (por cualquier aplicación).",
-      "Pídele su ID y haz clic en \"{btn}\".",
-      "Pega el ID, ponle un apodo (opcional) y confirma. Tu amigo verá un aviso preguntando si acepta, y debe hacer clic en OK.",
-      "Cuando el punto del contacto se ponga verde, está en línea. Elige el contacto y conversa.",
+      "Acuerda con tu amigo un nombre de sala y una contraseña (por cualquier aplicación).",
+      "Haz clic en \"{btn}\" y escribe el nombre y la contraseña.",
+      "Tu amigo hace lo mismo, con el mismo nombre y la misma contraseña.",
+      "Cuando aparezca en la lista con el punto verde, está en línea. Elige el contacto y conversa.",
       "Usa el clip 📎 para enviar imágenes. Haz clic derecho en un contacto para eliminarlo."
     ],
     limitsTitle: "Conviene saber",
     limits: [
       "Las dos personas necesitan tener la página abierta para intercambiar mensajes.",
-      "No hay descubrimiento automático de contactos. El intercambio de IDs ocupa ese lugar.",
+      "Los contactos aparecen solos, pero solo para quienes entraron en la misma sala con la misma contraseña.",
       "El historial se guarda solo en este navegador. Borrar los datos del sitio elimina todo.",
-      "En redes muy restrictivas la conexión puede fallar.",
-      "Si el punto no se pone verde: revisa que el ID sea correcto, que los dos tengan la página abierta y que arriba diga \"Listo para conversar\". Abre el sitio desde su dirección de GitHub Pages, no desde el archivo en tu computadora."
+      "En redes muy restrictivas, o con extensiones que desactivan WebRTC, la conexión puede fallar. Si ocurre, aparece un aviso arriba en la página.",
+      "Si el contacto no aparece: revisa que el nombre y la contraseña de la sala sean exactamente iguales en los dos lados (importan las mayúsculas), que los dos tengan la página abierta y que arriba diga \"Listo para conversar\". Abre el sitio desde su dirección de GitHub Pages, no desde el archivo en tu computadora."
     ],
     privacyTitle: "Privacidad",
-    privacy: "Los mensajes no pasan por un servidor, pero el servidor de presentación puede ver los IDs y las direcciones de red de quien se conecta. No compartas tu ID con personas que no conoces: quien tenga tu ID puede pedir conversar (siempre puedes rechazar)."
+    privacy: "Los mensajes van directo entre los navegadores, cifrados, y no pasan por un servidor. Los servidores públicos de presentación pueden ver que existe una sala y las direcciones de red de quien se conecta. Usa una contraseña que solo ustedes conozcan: quien sepa el nombre y la contraseña de la sala puede entrar."
   }
 };
 const LOCALES = { pt: "pt-BR", en: "en-US", es: "es-ES" };
 
 const KEY = "lanchat.v1";
+const APP_ID = "lanchat-web-7f3a91";
 const MAX_TEXT = 2000;
+const MAX_ROOM = 40;
 const IMG_MAX = 800;
-const RETRY_MS = 10000;
-const RETRY_GAP = 8000;
-
+const BLOCKED_AFTER_MS = 15000;
 const TURN_URL = "";
-const STUN = [
-  { urls: "stun:stun.l.google.com:19302" },
-  { urls: "stun:stun1.l.google.com:19302" }
-];
+const ID_RE = /^[A-Za-z0-9][A-Za-z0-9_-]{0,62}[A-Za-z0-9]$/;
 
 const $ = id => document.getElementById(id);
-const list = $("contactList"), box = $("messages"), helpDlg = $("helpDialog");
+const list = $("contactList"), box = $("messages"), helpDlg = $("helpDialog"), roomList = $("roomList");
 
 function randomId() {
   const a = new Uint8Array(8);
@@ -176,9 +176,12 @@ function loadSaved() {
   try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; }
 }
 function cleanName(v) { return String(v || "").trim().slice(0, 30); }
+function cleanRoom(v) { return String(v || "").trim().slice(0, MAX_ROOM); }
 
-const state = Object.assign({ name: "", peerId: "", lang: "", contacts: {} }, loadSaved());
+const state = Object.assign({ name: "", peerId: "", lang: "", rooms: [], contacts: {} }, loadSaved());
 if (!state.contacts || typeof state.contacts !== "object") state.contacts = {};
+if (!Array.isArray(state.rooms)) state.rooms = [];
+state.rooms = state.rooms.filter(r => r && typeof r.name === "string" && typeof r.password === "string");
 if (!state.peerId) state.peerId = randomId();
 
 function detectLang() {
@@ -211,9 +214,13 @@ const now = () =>
   new Date().toLocaleTimeString(LOCALES[lang], { hour: "2-digit", minute: "2-digit", hour12: false });
 
 let current = null;
-let peer = null;
-const conns = {};
-const isOnline = id => !!(conns[id] && conns[id].open);
+let T = null;
+let turnConfig = [];
+let waitStart = 0;
+let joinProblem = null;
+const handles = {};
+const links = {};
+const isOnline = id => !!(links[id] && links[id].length);
 
 let statusInfo = { key: "statusStarting", ok: false, vars: null };
 function setStatus(key, ok, vars) { statusInfo = { key, ok, vars: vars || null }; renderStatus(); }
@@ -223,86 +230,87 @@ function renderStatus() {
   s.className = "status" + (statusInfo.ok ? " ok" : "");
 }
 
-function startPeer() {
-  if (typeof Peer === "undefined") { setStatus("statusNoLib", false); return; }
-  setStatus("statusConnecting", false);
-  if (!TURN_URL) { createPeer(STUN); return; }
-  fetch(TURN_URL)
-    .then(r => r.json())
-    .then(turn => createPeer(Array.isArray(turn) ? STUN.concat(turn) : STUN))
-    .catch(() => createPeer(STUN));
+function updateStatus() {
+  if (!T) { setStatus("statusNoLib", false); return; }
+  if (!state.rooms.length) { setStatus("statusNoRooms", false); return; }
+  let open = 0;
+  try {
+    open = Object.values(T.getRelaySockets()).filter(w => w && w.readyState === 1).length;
+  } catch {}
+  if (!open) {
+    setStatus(waitStart && Date.now() - waitStart > BLOCKED_AFTER_MS ? "statusBlocked" : "statusConnecting", false);
+    return;
+  }
+  if (joinProblem) { setStatus("statusJoinError", false, { room: joinProblem }); return; }
+  setStatus("statusReady", true);
 }
+setInterval(updateStatus, 2500);
 
-function createPeer(iceServers) {
-  peer = new Peer(state.peerId, { config: { iceServers } });
-  peer.on("open", () => { setStatus("statusReady", true); connectAllSaved(); });
-  peer.on("connection", conn => setupConn(conn, true));
-  peer.on("disconnected", () => {
-    setStatus("statusReconnecting", false);
-    setTimeout(() => { if (peer && !peer.destroyed) peer.reconnect(); }, 3000);
+const quiet = p => Promise.resolve(p).catch(() => {});
+
+function openRoom(r) {
+  if (!T || handles[r.name]) return;
+  waitStart = waitStart || Date.now();
+  const cfg = { appId: APP_ID, password: r.password };
+  if (turnConfig.length) cfg.turnConfig = turnConfig;
+  const room = T.joinRoom(cfg, r.name, {
+    onJoinError: () => { joinProblem = r.name; updateStatus(); }
   });
-  peer.on("error", err => {
-    if (err.type === "peer-unavailable") {
-      if (watchId && Date.now() < watchUntil && String(err.message).includes(watchId)) {
-        watchId = null;
-        alert(t("peerNotFound"));
-      }
-      return;
-    }
-    if (err.type === "unavailable-id") setStatus("statusIdInUse", false);
-    else setStatus("statusError", false, { type: err.type });
-  });
+  const hello = room.makeAction("hello");
+  const text = room.makeAction("text");
+  const image = room.makeAction("image");
+  handles[r.name] = { room, hello, text, image, peers: {} };
+  room.onPeerJoin = pid => quiet(hello.send({ id: state.peerId, name: state.name }, { target: pid }));
+  room.onPeerLeave = pid => unlink(r.name, pid);
+  hello.onMessage = (d, m) => onHello(r.name, m.peerId, d);
+  text.onMessage = (d, m) => onText(r.name, m.peerId, d);
+  image.onMessage = (d, m) => onImage(r.name, m.peerId, d);
 }
 
-let watchId = null, watchUntil = 0;
-const lastTry = {};
-
-function connectTo(id, force) {
-  if (!peer || !peer.open || id === state.peerId || isOnline(id)) return;
-  const nowMs = Date.now();
-  if (!force && lastTry[id] && nowMs - lastTry[id] < RETRY_GAP) return;
-  lastTry[id] = nowMs;
-  const conn = peer.connect(id, { reliable: true, metadata: { name: state.name } });
-  setupConn(conn, false);
+function closeRoom(name) {
+  const h = handles[name];
+  if (h) {
+    try { h.room.leave(); } catch {}
+    Object.keys(h.peers).forEach(pid => unlink(name, pid));
+    delete handles[name];
+  }
+  state.rooms = state.rooms.filter(r => r.name !== name);
+  if (joinProblem === name) joinProblem = null;
+  save();
+  renderRooms();
+  refresh();
+  updateStatus();
 }
 
-function connectAllSaved() {
-  Object.keys(state.contacts).forEach(id => connectTo(id));
-}
-setInterval(() => { if (peer && peer.open) connectAllSaved(); }, RETRY_MS);
-
-function preferred(conn, incoming) {
-  const initiator = incoming ? conn.peer : state.peerId;
-  const smaller = state.peerId < conn.peer ? state.peerId : conn.peer;
-  return initiator === smaller;
+function contactOf(roomName, pid) {
+  const h = handles[roomName];
+  const id = h && h.peers[pid];
+  return id && state.contacts[id] ? id : null;
 }
 
-function setupConn(conn, incoming) {
-  const id = conn.peer;
+function onHello(roomName, pid, d) {
+  const h = handles[roomName];
+  if (!h || !d || typeof d !== "object" || typeof d.id !== "string") return;
+  if (!ID_RE.test(d.id) || d.id === state.peerId) return;
+  const name = cleanName(d.name);
+  h.peers[pid] = d.id;
+  const l = links[d.id] || (links[d.id] = []);
+  if (!l.some(x => x.room === roomName && x.peerId === pid)) l.push({ room: roomName, peerId: pid });
+  const c = ensureContact(d.id, name, false);
+  if (!c.custom && name && c.name !== name) { c.name = name; save(); }
+  if (joinProblem === roomName) joinProblem = null;
+  refresh();
+  updateStatus();
+}
 
-  conn.on("open", () => {
-    if (incoming && !state.contacts[id]) {
-      const who = cleanName(conn.metadata && conn.metadata.name) || id;
-      if (!confirm(t("acceptConn", { who, id }))) { conn.close(); return; }
-    }
-    const old = conns[id];
-    if (old && old.open && old !== conn) {
-      if (!preferred(conn, incoming)) { conn.close(); return; }
-      conns[id] = conn;
-      old.close();
-    } else {
-      conns[id] = conn;
-    }
-    ensureContact(id, incoming ? cleanName(conn.metadata && conn.metadata.name) : "", false);
-    conn.send({ type: "hello", name: state.name });
-    refresh();
-  });
-
-  conn.on("data", data => onData(id, data));
-
-  const gone = () => { if (conns[id] === conn) { delete conns[id]; refresh(); } };
-  conn.on("close", gone);
-  conn.on("error", gone);
+function unlink(roomName, pid) {
+  const h = handles[roomName];
+  const id = h && h.peers[pid];
+  if (h) delete h.peers[pid];
+  if (!id || !links[id]) return;
+  links[id] = links[id].filter(x => !(x.room === roomName && x.peerId === pid));
+  if (!links[id].length) delete links[id];
+  refresh();
 }
 
 function ensureContact(id, name, custom) {
@@ -314,18 +322,16 @@ function ensureContact(id, name, custom) {
   return c;
 }
 
-function onData(id, data) {
-  const c = state.contacts[id];
-  if (!c || !data || typeof data !== "object") return;
+function onText(roomName, pid, d) {
+  const id = contactOf(roomName, pid);
+  if (!id || typeof d !== "string") return;
+  addMessage(id, { own: false, type: "text", text: d.slice(0, MAX_TEXT), time: now() });
+}
 
-  if (data.type === "hello") {
-    if (!c.custom && cleanName(data.name)) { c.name = cleanName(data.name); save(); refresh(); }
-  } else if (data.type === "text" && typeof data.text === "string") {
-    addMessage(id, { own: false, type: "text", text: data.text.slice(0, MAX_TEXT), time: now() });
-  } else if (data.type === "image" && typeof data.data === "string"
-             && data.data.startsWith("data:image/") && data.data.length < 2000000) {
-    addMessage(id, { own: false, type: "image", data: data.data, time: now() });
-  }
+function onImage(roomName, pid, d) {
+  const id = contactOf(roomName, pid);
+  if (!id || typeof d !== "string" || !d.startsWith("data:image/") || d.length >= 2000000) return;
+  addMessage(id, { own: false, type: "image", data: d, time: now() });
 }
 
 function addMessage(id, msg) {
@@ -340,9 +346,12 @@ function addMessage(id, msg) {
 
 function sendMessage(msg) {
   if (!current) { alert(t("pickFirst")); return false; }
-  const conn = conns[current];
-  if (!conn || !conn.open) { connectTo(current, true); alert(t("contactOffline")); return false; }
-  conn.send(msg.type === "image" ? { type: "image", data: msg.data } : { type: "text", text: msg.text });
+  const link = links[current] && links[current][0];
+  const h = link && handles[link.room];
+  if (!h) { alert(t("contactOffline")); return false; }
+  quiet(msg.type === "image"
+    ? h.image.send(msg.data, { target: link.peerId })
+    : h.text.send(msg.text, { target: link.peerId }));
   addMessage(current, msg);
   return true;
 }
@@ -427,6 +436,30 @@ function renderContacts() {
   });
 }
 
+function renderRooms() {
+  roomList.innerHTML = "";
+  if (!state.rooms.length) {
+    const li = document.createElement("li");
+    li.className = "room-empty";
+    li.textContent = t("noRooms");
+    roomList.appendChild(li);
+    return;
+  }
+  state.rooms.forEach(r => {
+    const li = document.createElement("li");
+    li.className = "room-chip";
+    const nm = document.createElement("span");
+    nm.textContent = r.name;
+    const x = document.createElement("button");
+    x.textContent = "✕";
+    x.setAttribute("aria-label", t("leaveRoom", { name: r.name }));
+    x.title = t("leaveRoom", { name: r.name });
+    x.onclick = () => { if (confirm(t("confirmLeaveRoom", { name: r.name }))) closeRoom(r.name); };
+    li.append(nm, x);
+    roomList.appendChild(li);
+  });
+}
+
 function renderHeader() {
   const el = $("chatTitle");
   el.textContent = "";
@@ -492,6 +525,7 @@ function applyLang() {
   document.querySelectorAll("[data-i18n-placeholder]").forEach(el => { el.placeholder = t(el.dataset.i18nPlaceholder); });
   document.querySelectorAll("[data-i18n-aria]").forEach(el => { el.setAttribute("aria-label", t(el.dataset.i18nAria)); });
   renderStatus();
+  renderRooms();
   refresh();
   renderMessages();
   if (helpDlg.open) renderHelp();
@@ -517,7 +551,7 @@ function renderHelp() {
   };
   const items = (key, tag) => {
     const ul = document.createElement(tag);
-    t(key, { btn: t("addBtn") }).forEach(txt => {
+    t(key).forEach(txt => {
       const li = document.createElement("li");
       li.textContent = typeof txt === "string" ? txt.replace("{btn}", t("addBtn")) : "";
       ul.appendChild(li);
@@ -543,24 +577,17 @@ helpDlg.addEventListener("click", e => { if (e.target === helpDlg) helpDlg.close
 helpDlg.addEventListener("close", () => { if (helpOpener) helpOpener.focus(); });
 
 $("addBtn").onclick = () => {
-  const id = (prompt(t("askId")) || "").trim();
-  if (!id) return;
-  if (id === state.peerId) { alert(t("ownId")); return; }
-  if (!/^[A-Za-z0-9][A-Za-z0-9_-]{0,62}[A-Za-z0-9]$/.test(id)) { alert(t("badId")); return; }
-  const nick = cleanName(prompt(t("askNick")));
-  const c = ensureContact(id, nick, !!nick);
-  if (nick) { c.name = nick; c.custom = true; }
+  const name = cleanRoom(prompt(t("askRoom")));
+  if (!name) return;
+  if (state.rooms.some(r => r.name === name)) { alert(t("roomExists")); return; }
+  const password = (prompt(t("askRoomPass")) || "").trim();
+  if (!password) { alert(t("roomNeedsPass")); return; }
+  const r = { name, password };
+  state.rooms.push(r);
   save();
-  watchId = id; watchUntil = Date.now() + 10000;
-  connectTo(id, true);
-  selectContact(id);
-};
-
-$("copyBtn").onclick = () => {
-  const btn = $("copyBtn");
-  const done = () => { btn.textContent = t("copied"); setTimeout(() => { btn.textContent = t("copy"); }, 1500); };
-  if (navigator.clipboard) navigator.clipboard.writeText(state.peerId).then(done, () => prompt(t("copyPrompt"), state.peerId));
-  else prompt(t("copyPrompt"), state.peerId);
+  openRoom(r);
+  renderRooms();
+  updateStatus();
 };
 
 const ctx = $("ctx");
@@ -574,7 +601,6 @@ $("ctxDelete").onclick = () => {
   const id = ctxTarget;
   if (!id || !state.contacts[id]) return;
   if (!confirm(t("confirmDelete", { name: state.contacts[id].name }))) return;
-  if (conns[id]) { const c = conns[id]; delete conns[id]; c.close(); }
   delete state.contacts[id];
   if (current === id) current = null;
   save();
@@ -582,7 +608,18 @@ $("ctxDelete").onclick = () => {
   renderMessages();
 };
 
+async function boot() {
+  try { T = await import("./trystero.js"); } catch { T = null; }
+  if (T && TURN_URL) {
+    try {
+      const turn = await fetch(TURN_URL).then(r => r.json());
+      if (Array.isArray(turn)) turnConfig = turn;
+    } catch {}
+  }
+  state.rooms.forEach(openRoom);
+  updateStatus();
+}
+
 $("whoami").textContent = "Projeto Chat — " + state.name;
-$("myId").textContent = state.peerId;
 applyLang();
-startPeer();
+boot();
