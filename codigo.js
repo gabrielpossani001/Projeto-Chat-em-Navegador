@@ -2,7 +2,7 @@ const I18N = {
   pt: {
     contacts: "Contatos", rooms: "Salas", addBtn: "+ Entrar numa sala", help: "Como usar",
     attach: "Enviar imagem", placeholder: "Digite uma mensagem...", send: "Enviar",
-    deleteContact: "Excluir contato", close: "Fechar",
+    deleteContact: "Excluir contato", close: "Fechar", back: "Voltar para os contatos",
     noContacts: "Nenhum contato ainda. Clique em \"{btn}\" e entre na mesma sala que o seu amigo.",
     noRooms: "Nenhuma sala ainda.",
     pickContact: "Selecione um contato para conversar",
@@ -53,7 +53,7 @@ const I18N = {
   en: {
     contacts: "Contacts", rooms: "Rooms", addBtn: "+ Join a room", help: "How to use",
     attach: "Send image", placeholder: "Type a message...", send: "Send",
-    deleteContact: "Delete contact", close: "Close",
+    deleteContact: "Delete contact", close: "Close", back: "Back to contacts",
     noContacts: "No contacts yet. Click \"{btn}\" and join the same room as your friend.",
     noRooms: "No rooms yet.",
     pickContact: "Select a contact to chat",
@@ -104,7 +104,7 @@ const I18N = {
   es: {
     contacts: "Contactos", rooms: "Salas", addBtn: "+ Entrar en una sala", help: "Cómo usar",
     attach: "Enviar imagen", placeholder: "Escribe un mensaje...", send: "Enviar",
-    deleteContact: "Eliminar contacto", close: "Cerrar",
+    deleteContact: "Eliminar contacto", close: "Cerrar", back: "Volver a los contactos",
     noContacts: "Aún no hay contactos. Haz clic en \"{btn}\" y entra en la misma sala que tu amigo.",
     noRooms: "Aún no hay salas.",
     pickContact: "Selecciona un contacto para conversar",
@@ -166,6 +166,23 @@ const ID_RE = /^[A-Za-z0-9][A-Za-z0-9_-]{0,62}[A-Za-z0-9]$/;
 
 const $ = id => document.getElementById(id);
 const list = $("contactList"), box = $("messages"), helpDlg = $("helpDialog"), roomList = $("roomList");
+
+function fitViewport() {
+  const v = window.visualViewport;
+  if (v && v.scale > 1.01) return;
+  const stick = box.scrollTop + box.clientHeight >= box.scrollHeight - 40;
+  const root = document.documentElement.style;
+  root.setProperty("--app-h", Math.round(v ? v.height : window.innerHeight) + "px");
+  root.setProperty("--app-top", Math.round(v ? v.offsetTop : 0) + "px");
+  if (stick) requestAnimationFrame(() => { box.scrollTop = box.scrollHeight; });
+}
+fitViewport();
+window.addEventListener("resize", fitViewport);
+window.addEventListener("orientationchange", fitViewport);
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", fitViewport);
+  window.visualViewport.addEventListener("scroll", fitViewport);
+}
 
 function randomId() {
   const a = new Uint8Array(8);
@@ -385,6 +402,15 @@ function shrinkImage(file) {
   });
 }
 
+$("msgInput").addEventListener("focus", () => {
+  setTimeout(() => { box.scrollTop = box.scrollHeight; }, 300);
+});
+$("backBtn").onclick = () => {
+  current = null;
+  refresh();
+  renderMessages();
+};
+
 $("attachBtn").onclick = () => $("fileInput").click();
 $("fileInput").onchange = e => {
   const file = e.target.files[0];
@@ -397,6 +423,7 @@ $("fileInput").onchange = e => {
 };
 
 function refresh() {
+  $("panel").classList.toggle("chat-open", !!current);
   renderContacts();
   renderHeader();
   const total = Object.values(state.contacts).reduce((n, c) => n + (c.unread || 0), 0);
