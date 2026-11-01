@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Chat direto entre navegadores, sem servidor de mensagens.">
-<title>LAN Chat</title>
+<title>Projeto Chat</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<main class="panel" id="panel" aria-label="LAN Chat">
+<main class="panel" id="panel" aria-label="Projeto Chat">
   <header class="topbar">
-    <h1 id="whoami">Projeto Chat</h1><h5>por Gabriel Possani</h5>
+    <h1 id="whoami">Projeto Chat</h1>
     <div class="topbar-right">
       <span class="status" id="status">Iniciando...</span>
       <label class="lang">
@@ -22,15 +22,18 @@
           <option value="es">Español</option>
         </select>
       </label>
-      <span class="idbox"><span data-i18n="idLabel">Seu ID:</span> <code id="myId"></code><button class="copy-btn" id="copyBtn" data-i18n="copy">Copiar</button></span>
     </div>
   </header>
 
   <div class="body">
     <nav class="contacts">
       <h2 data-i18n="contacts">Contatos</h2>
-      <button class="add-btn" id="addBtn" data-i18n="addBtn">+ Conectar por ID</button>
+      <button class="add-btn" id="addBtn" data-i18n="addBtn">+ Entrar numa sala</button>
       <ul class="contact-list" id="contactList"></ul>
+      <div class="rooms">
+        <h2 data-i18n="rooms">Salas</h2>
+        <ul class="room-list" id="roomList"></ul>
+      </div>
       <button class="help-btn" id="helpBtn"><span class="q" aria-hidden="true">?</span><span data-i18n="help">Como usar</span></button>
     </nav>
 
@@ -59,7 +62,6 @@
   <div class="help-body" id="helpBody"></div>
 </dialog>
 
-<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
-<script src="codigo.js"></script>
+<script type="module" src="codigo.js"></script>
 </body>
 </html>
