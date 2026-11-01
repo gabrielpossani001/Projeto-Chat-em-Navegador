@@ -15,22 +15,23 @@ Qual é o objetivo?
 O Projeto Chat é um chat simples para conversar com amigos e colegas direto entre computadores, enviando mensagens e imagens sem criar conta e sem um servidor guardando suas conversas. Nasceu como um projeto de estudo de redes e JavaScript, com visual inspirado no Discord.
 Como funciona?
 
-Cada pessoa recebe um ID. Quando você conecta no ID de alguém, seu navegador abre uma conexão direta (WebRTC) com o dele. As mensagens e imagens vão direto de um para o outro. Um servidor público só ajuda os dois a se encontrarem no começo. O histórico fica salvo no seu próprio navegador.
+Você e seu amigo entram na mesma sala, com o mesmo nome e a mesma senha. Quem estiver na sala aparece na sua lista de contatos, e seu navegador abre uma conexão direta (WebRTC) com o dele. As mensagens e imagens vão direto de um para o outro. Servidores públicos só ajudam vocês a se encontrarem no começo. O histórico fica salvo no seu próprio navegador.
 Passo a passo
 
-    Copie seu ID no topo da página e envie para o seu amigo (por qualquer aplicativo).
-    Peça o ID dele e clique em "+ Conectar por ID".
-    Cole o ID, dê um apelido (opcional) e confirme.
-    Quando a bolinha do contato ficar verde, ele está online. Escolha o contato e converse.
+    Combine com seu amigo um nome de sala e uma senha (por qualquer aplicativo).
+    Clique em "+ Entrar numa sala" e digite o nome e a senha.
+    Seu amigo faz o mesmo, com o mesmo nome e a mesma senha.
+    Quando ele aparecer na lista com a bolinha verde, está online. Escolha o contato e converse.
     Use o clipe 📎 para enviar imagens. Clique com o botão direito em um contato para excluí-lo.
 
 Bom saber
 
     Os dois precisam estar com a página aberta para trocar mensagens.
-    Não existe descoberta automática de contatos. A troca de IDs faz esse papel.
+    Os contatos aparecem sozinhos, mas só para quem entrou na mesma sala com a mesma senha.
     O histórico fica salvo só neste navegador. Limpar os dados do site apaga tudo.
-    Em redes muito restritas a conexão pode falhar.
+    Em redes muito restritas, ou com extensões que desligam o WebRTC, a conexão pode falhar. Se isso acontecer, aparece um aviso no topo da página.
+    Se o contato não aparecer: confira se o nome e a senha da sala são exatamente iguais nos dois lados (maiúsculas contam), se os dois estão com a página aberta e se o topo mostra "Pronto para conversar". Abra o site pelo endereço do GitHub Pages, não pelo arquivo no computador.
 
 Privacidade
 
-As mensagens não passam por servidor, mas o servidor de apresentação enxerga os IDs e os endereços de rede de quem conecta. Não compartilhe seu ID com quem você não conhece: quem tiver seu ID pode pedir para conversar (você sempre pode recusar).
+As mensagens vão direto entre os navegadores, criptografadas, e não passam por um servidor. Os servidores públicos de apresentação conseguem ver que existe uma sala e os endereços de rede de quem conecta. Use uma senha que só vocês conhecem: quem souber o nome e a senha da sala entra nela.
