@@ -2,7 +2,7 @@ const I18N = {
   pt: {
     contacts: "Contatos", rooms: "Salas", addBtn: "+ Entrar numa sala", help: "Como usar",
     attach: "Enviar imagem", placeholder: "Digite uma mensagem...", send: "Enviar",
-    deleteContact: "Excluir contato", close: "Fechar",
+    deleteContact: "Excluir contato", close: "Fechar", backLabel: "Contatos", tapHint: "Toque em um contato para abrir a conversa.",
     noContacts: "Nenhum contato ainda. Clique em \"{btn}\" e entre na mesma sala que o seu amigo.",
     noRooms: "Nenhuma sala ainda.",
     pickContact: "Selecione um contato para conversar",
@@ -53,7 +53,7 @@ const I18N = {
   en: {
     contacts: "Contacts", rooms: "Rooms", addBtn: "+ Join a room", help: "How to use",
     attach: "Send image", placeholder: "Type a message...", send: "Send",
-    deleteContact: "Delete contact", close: "Close",
+    deleteContact: "Delete contact", close: "Close", backLabel: "Contacts", tapHint: "Tap a contact to open the conversation.",
     noContacts: "No contacts yet. Click \"{btn}\" and join the same room as your friend.",
     noRooms: "No rooms yet.",
     pickContact: "Select a contact to chat",
@@ -104,7 +104,7 @@ const I18N = {
   es: {
     contacts: "Contactos", rooms: "Salas", addBtn: "+ Entrar en una sala", help: "Cómo usar",
     attach: "Enviar imagen", placeholder: "Escribe un mensaje...", send: "Enviar",
-    deleteContact: "Eliminar contacto", close: "Cerrar",
+    deleteContact: "Eliminar contacto", close: "Cerrar", backLabel: "Contactos", tapHint: "Toca un contacto para abrir la conversación.",
     noContacts: "Aún no hay contactos. Haz clic en \"{btn}\" y entra en la misma sala que tu amigo.",
     noRooms: "Aún no hay salas.",
     pickContact: "Selecciona un contacto para conversar",
@@ -166,6 +166,27 @@ const ID_RE = /^[A-Za-z0-9][A-Za-z0-9_-]{0,62}[A-Za-z0-9]$/;
 
 const $ = id => document.getElementById(id);
 const list = $("contactList"), box = $("messages"), helpDlg = $("helpDialog"), roomList = $("roomList");
+
+function fitViewport() {
+  const v = window.visualViewport;
+  const panel = $("panel");
+  const stick = box.scrollTop + box.clientHeight >= box.scrollHeight - 40;
+  const keyboard = !!v && v.scale <= 1.01 && window.innerHeight - v.height > 120;
+  if (keyboard) {
+    const root = document.documentElement.style;
+    root.setProperty("--app-h", Math.round(v.height) + "px");
+    root.setProperty("--app-top", Math.round(v.offsetTop) + "px");
+  }
+  panel.classList.toggle("kb", keyboard);
+  if (stick) requestAnimationFrame(() => { box.scrollTop = box.scrollHeight; });
+}
+fitViewport();
+window.addEventListener("resize", fitViewport);
+window.addEventListener("orientationchange", fitViewport);
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", fitViewport);
+  window.visualViewport.addEventListener("scroll", fitViewport);
+}
 
 function randomId() {
   const a = new Uint8Array(8);
@@ -385,6 +406,15 @@ function shrinkImage(file) {
   });
 }
 
+$("msgInput").addEventListener("focus", () => {
+  setTimeout(() => { box.scrollTop = box.scrollHeight; }, 300);
+});
+$("backBtn").onclick = () => {
+  current = null;
+  refresh();
+  renderMessages();
+};
+
 $("attachBtn").onclick = () => $("fileInput").click();
 $("fileInput").onchange = e => {
   const file = e.target.files[0];
@@ -397,6 +427,7 @@ $("fileInput").onchange = e => {
 };
 
 function refresh() {
+  $("panel").classList.toggle("chat-open", !!current);
   renderContacts();
   renderHeader();
   const total = Object.values(state.contacts).reduce((n, c) => n + (c.unread || 0), 0);
@@ -609,7 +640,7 @@ $("ctxDelete").onclick = () => {
 };
 
 async function boot() {
-  try { T = await import("./trystero.js"); } catch { T = null; }
+  try { T = await import("./trystero.js?v=6"); } catch { T = null; }
   if (T && TURN_URL) {
     try {
       const turn = await fetch(TURN_URL).then(r => r.json());
@@ -618,6 +649,25 @@ async function boot() {
   }
   state.rooms.forEach(openRoom);
   updateStatus();
+}
+
+if (/[?&]debug\b/.test(location.search)) {
+  const d = document.createElement("pre");
+  d.style.cssText = "position:fixed;left:0;bottom:0;z-index:99;margin:0;padding:4px 6px;font:11px monospace;background:#000c;color:#0f0;pointer-events:none;max-width:100%;white-space:pre-wrap";
+  document.body.appendChild(d);
+  setInterval(() => {
+    const v = window.visualViewport;
+    const r = el => { const b = document.querySelector(el).getBoundingClientRect(); return Math.round(b.top) + ".." + Math.round(b.bottom); };
+    d.textContent = [
+      "v6",
+      "janela " + innerWidth + "x" + innerHeight,
+      "visivel " + (v ? Math.round(v.width) + "x" + Math.round(v.height) + " zoom" + v.scale.toFixed(2) + " topo" + Math.round(v.offsetTop) : "-"),
+      "painel " + r(".panel"),
+      "digitar " + r(".composer"),
+      "mensagens " + box.clientHeight + "/" + box.scrollHeight,
+      "teclado " + $("panel").classList.contains("kb")
+    ].join(" | ");
+  }, 500);
 }
 
 $("whoami").textContent = "Projeto Chat — " + state.name;
