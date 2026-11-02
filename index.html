@@ -2,10 +2,10 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
 <meta name="description" content="Chat direto entre navegadores, sem servidor de mensagens.">
 <title>Projeto Chat</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
 
@@ -28,6 +28,7 @@
   <div class="body">
     <nav class="contacts">
       <h2 data-i18n="contacts">Contatos</h2>
+      <p class="contacts-hint" data-i18n="tapHint">Toque em um contato para abrir a conversa.</p>
       <button class="add-btn" id="addBtn" data-i18n="addBtn">+ Entrar numa sala</button>
       <ul class="contact-list" id="contactList"></ul>
       <div class="rooms">
@@ -38,7 +39,10 @@
     </nav>
 
     <section class="chat">
-      <div class="chat-header" id="chatTitle">Selecione um contato para conversar</div>
+      <div class="chat-header">
+        <button class="chat-back" id="backBtn"><span aria-hidden="true">←</span><span data-i18n="backLabel">Contatos</span></button>
+        <div class="chat-title" id="chatTitle">Selecione um contato para conversar</div>
+      </div>
       <div class="messages" id="messages">
         <p class="empty">Escolha um contato na lista para ver a conversa.</p>
       </div>
@@ -62,6 +66,6 @@
   <div class="help-body" id="helpBody"></div>
 </dialog>
 
-<script type="module" src="codigo.js"></script>
+<script type="module" src="codigo.js?v=6"></script>
 </body>
 </html>
