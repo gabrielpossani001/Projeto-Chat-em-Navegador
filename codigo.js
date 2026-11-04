@@ -21,7 +21,7 @@ const I18N = {
     notImage: "Escolha um arquivo de imagem.", imgReadFail: "Não foi possível ler essa imagem.",
     askRoom: "Nome da sala (combine com seu amigo; os dois precisam digitar igual):",
     askRoomPass: "Senha da sala (combine com seu amigo; só quem souber a senha entra):",
-    roomNeedsPass: "Informe uma senha. Sem senha a sala não fica protegida.",
+    roomNeedsPass: "Use uma senha com pelo menos 8 caracteres. Senha curta é fácil de adivinhar.",
     roomExists: "Você já está nessa sala.",
     leaveRoom: "Sair da sala {name}",
     confirmLeaveRoom: "Sair da sala '{name}'? Os contatos e conversas continuam salvos.",
@@ -72,7 +72,7 @@ const I18N = {
     notImage: "Choose an image file.", imgReadFail: "Could not read that image.",
     askRoom: "Room name (agree with your friend; you both must type it exactly the same):",
     askRoomPass: "Room password (agree with your friend; only people who know it can join):",
-    roomNeedsPass: "Enter a password. Without one the room is not protected.",
+    roomNeedsPass: "Use a password with at least 8 characters. Short passwords are easy to guess.",
     roomExists: "You are already in that room.",
     leaveRoom: "Leave room {name}",
     confirmLeaveRoom: "Leave room '{name}'? Contacts and conversations stay saved.",
@@ -123,7 +123,7 @@ const I18N = {
     notImage: "Elige un archivo de imagen.", imgReadFail: "No se pudo leer esa imagen.",
     askRoom: "Nombre de la sala (acuérdalo con tu amigo; los dos deben escribirlo igual):",
     askRoomPass: "Contraseña de la sala (acuérdala con tu amigo; solo entra quien la sepa):",
-    roomNeedsPass: "Escribe una contraseña. Sin ella la sala no está protegida.",
+    roomNeedsPass: "Usa una contraseña de al menos 8 caracteres. Una contraseña corta es fácil de adivinar.",
     roomExists: "Ya estás en esa sala.",
     leaveRoom: "Salir de la sala {name}",
     confirmLeaveRoom: "¿Salir de la sala '{name}'? Los contactos y conversaciones siguen guardados.",
@@ -161,8 +161,20 @@ const MAX_TEXT = 2000;
 const MAX_ROOM = 40;
 const IMG_MAX = 800;
 const BLOCKED_AFTER_MS = 15000;
-const TURN_URL = "https://gabrielpossani001.github.io/Projeto-Chat-em-Navegador/";
-const ID_RE = /^[A-Za-z0-9][A-Za-z0-9_-]{0,62}[A-Za-z0-9]$/;
+const TURN_URL = "";
+const ID_RE = /^lc-[a-z0-9]{8}$/;
+const CTRL = /[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u2028\u2029\u202a-\u202e\u2060-\u2069\ufeff]/g;
+const MAX_HISTORY = 300;
+const MAX_CONTACTS = 100;
+const MAX_IMG = 900000;
+const MAX_PIXELS = 16000000;
+const MIN_PASS = 8;
+const RELAYS = 12;
+const JPEG = "data:image/jpeg;base64,";
+
+if (window.top !== window.self) {
+  try { window.top.location.href = window.location.href; } catch {}
+}
 
 const $ = id => document.getElementById(id);
 const list = $("contactList"), box = $("messages"), helpDlg = $("helpDialog"), roomList = $("roomList");
@@ -196,11 +208,44 @@ function randomId() {
 function loadSaved() {
   try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; }
 }
-function cleanName(v) { return String(v || "").trim().slice(0, 30); }
-function cleanRoom(v) { return String(v || "").trim().slice(0, MAX_ROOM); }
+function clean(v) { return String(v || "").replace(CTRL, ""); }
+function cleanName(v) { return clean(v).trim().slice(0, 30); }
+function cleanRoom(v) { return clean(v).trim().slice(0, MAX_ROOM); }
+function validImage(d) {
+  return typeof d === "string" && d.length <= MAX_IMG && d.startsWith(JPEG) && /^[A-Za-z0-9+/]+={0,2}$/.test(d.slice(JPEG.length));
+}
+function sanitizeContacts(src) {
+  const out = Object.create(null);
+  if (!src || typeof src !== "object") return out;
+  Object.keys(src).forEach(id => {
+    const c = src[id];
+    if (!ID_RE.test(id) || !c || typeof c !== "object") return;
+    const unread = Math.floor(Number(c.unread));
+    out[id] = {
+      name: cleanName(c.name) || id,
+      custom: !!c.custom,
+      unread: unread > 0 ? unread : 0,
+      messages: (Array.isArray(c.messages) ? c.messages : []).filter(m => m && typeof m === "object").slice(-MAX_HISTORY).map(m => ({
+        own: !!m.own,
+        type: m.type === "image" && typeof m.data === "string" && m.data.startsWith(JPEG) ? "image" : "text",
+        text: typeof m.text === "string" ? clean(m.text).slice(0, MAX_TEXT) : "",
+        data: typeof m.data === "string" && m.data.startsWith(JPEG) && m.data.length <= MAX_IMG ? m.data : undefined,
+        time: typeof m.time === "string" ? clean(m.time).slice(0, 12) : ""
+      })).filter(m => m.type === "image" || m.text)
+    };
+  });
+  return out;
+}
+const buckets = Object.create(null);
+function allow(key, max, ms) {
+  const n = Date.now();
+  const b = buckets[key] || (buckets[key] = { t: n, c: 0 });
+  if (n - b.t > ms) { b.t = n; b.c = 0; }
+  return ++b.c <= max;
+}
 
 const state = Object.assign({ name: "", peerId: "", lang: "", rooms: [], contacts: {} }, loadSaved());
-if (!state.contacts || typeof state.contacts !== "object") state.contacts = {};
+state.contacts = sanitizeContacts(state.contacts);
 if (!Array.isArray(state.rooms)) state.rooms = [];
 state.rooms = state.rooms.filter(r => r && typeof r.name === "string" && typeof r.password === "string");
 if (!state.peerId) state.peerId = randomId();
@@ -239,8 +284,8 @@ let T = null;
 let turnConfig = [];
 let waitStart = 0;
 let joinProblem = null;
-const handles = {};
-const links = {};
+const handles = Object.create(null);
+const links = Object.create(null);
 const isOnline = id => !!(links[id] && links[id].length);
 
 let statusInfo = { key: "statusStarting", ok: false, vars: null };
@@ -272,7 +317,7 @@ const quiet = p => Promise.resolve(p).catch(() => {});
 function openRoom(r) {
   if (!T || handles[r.name]) return;
   waitStart = waitStart || Date.now();
-  const cfg = { appId: APP_ID, password: r.password };
+  const cfg = { appId: APP_ID, password: r.password, relayConfig: { redundancy: RELAYS } };
   if (turnConfig.length) cfg.turnConfig = turnConfig;
   const room = T.joinRoom(cfg, r.name, {
     onJoinError: () => { joinProblem = r.name; updateStatus(); }
@@ -280,7 +325,7 @@ function openRoom(r) {
   const hello = room.makeAction("hello");
   const text = room.makeAction("text");
   const image = room.makeAction("image");
-  handles[r.name] = { room, hello, text, image, peers: {} };
+  handles[r.name] = { room, hello, text, image, peers: Object.create(null) };
   room.onPeerJoin = pid => quiet(hello.send({ id: state.peerId, name: state.name }, { target: pid }));
   room.onPeerLeave = pid => unlink(r.name, pid);
   hello.onMessage = (d, m) => onHello(r.name, m.peerId, d);
@@ -312,7 +357,10 @@ function contactOf(roomName, pid) {
 function onHello(roomName, pid, d) {
   const h = handles[roomName];
   if (!h || !d || typeof d !== "object" || typeof d.id !== "string") return;
-  if (!ID_RE.test(d.id) || d.id === state.peerId) return;
+  if (!ID_RE.test(d.id) || d.id === state.peerId || !allow("h" + roomName + pid, 5, 10000)) return;
+  if (!state.contacts[d.id] && Object.keys(state.contacts).length >= MAX_CONTACTS) return;
+  const taken = links[d.id];
+  if (taken && taken.some(x => x.room === roomName && x.peerId !== pid)) return;
   const name = cleanName(d.name);
   h.peers[pid] = d.id;
   const l = links[d.id] || (links[d.id] = []);
@@ -328,6 +376,7 @@ function unlink(roomName, pid) {
   const h = handles[roomName];
   const id = h && h.peers[pid];
   if (h) delete h.peers[pid];
+  ["t", "i", "h"].forEach(k => { delete buckets[k + roomName + pid]; });
   if (!id || !links[id]) return;
   links[id] = links[id].filter(x => !(x.room === roomName && x.peerId === pid));
   if (!links[id].length) delete links[id];
@@ -345,20 +394,27 @@ function ensureContact(id, name, custom) {
 
 function onText(roomName, pid, d) {
   const id = contactOf(roomName, pid);
-  if (!id || typeof d !== "string") return;
-  addMessage(id, { own: false, type: "text", text: d.slice(0, MAX_TEXT), time: now() });
+  if (!id || typeof d !== "string" || !allow("t" + roomName + pid, 20, 10000)) return;
+  const text = clean(d).slice(0, MAX_TEXT);
+  if (text.trim()) addMessage(id, { own: false, type: "text", text, time: now() });
 }
 
 function onImage(roomName, pid, d) {
   const id = contactOf(roomName, pid);
-  if (!id || typeof d !== "string" || !d.startsWith("data:image/") || d.length >= 2000000) return;
-  addMessage(id, { own: false, type: "image", data: d, time: now() });
+  if (!id || !allow("i" + roomName + pid, 3, 10000) || !validImage(d)) return;
+  const img = new Image();
+  img.onload = () => {
+    const px = img.naturalWidth * img.naturalHeight;
+    if (px > 0 && px <= MAX_PIXELS && state.contacts[id]) addMessage(id, { own: false, type: "image", data: d, time: now() });
+  };
+  img.src = d;
 }
 
 function addMessage(id, msg) {
   const c = state.contacts[id];
   if (!c) return;
   c.messages.push(msg);
+  if (c.messages.length > MAX_HISTORY) c.messages.splice(0, c.messages.length - MAX_HISTORY);
   if (id === current) renderMessages();
   else if (!msg.own) c.unread = (c.unread || 0) + 1;
   save();
@@ -399,7 +455,10 @@ function shrinkImage(file) {
       g.fillRect(0, 0, cv.width, cv.height);
       g.drawImage(img, 0, 0, cv.width, cv.height);
       URL.revokeObjectURL(url);
-      resolve(cv.toDataURL("image/jpeg", 0.8));
+      let q = 0.8;
+      let out = cv.toDataURL("image/jpeg", q);
+      while (out.length > MAX_IMG && q > 0.3) { q -= 0.15; out = cv.toDataURL("image/jpeg", q); }
+      resolve(out.length > MAX_IMG ? "" : out);
     };
     img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("invalid image")); };
     img.src = url;
@@ -422,7 +481,7 @@ $("fileInput").onchange = e => {
   if (!file) return;
   if (!file.type.startsWith("image/")) { alert(t("notImage")); return; }
   shrinkImage(file)
-    .then(data => sendMessage({ own: true, type: "image", data, time: now() }))
+    .then(data => { if (!data) throw new Error("too big"); sendMessage({ own: true, type: "image", data, time: now() }); })
     .catch(() => alert(t("imgReadFail")));
 };
 
@@ -532,7 +591,7 @@ function renderMessages() {
     const s = document.createElement("span");
     s.className = "sender"; s.textContent = m.own ? state.name : c.name;
     b.appendChild(s);
-    if (m.type === "image" && typeof m.data === "string" && m.data.startsWith("data:image/")) {
+    if (m.type === "image" && typeof m.data === "string" && m.data.startsWith(JPEG)) {
       const img = document.createElement("img");
       img.src = m.data; img.alt = t("imgAlt");
       b.appendChild(img);
@@ -612,7 +671,7 @@ $("addBtn").onclick = () => {
   if (!name) return;
   if (state.rooms.some(r => r.name === name)) { alert(t("roomExists")); return; }
   const password = (prompt(t("askRoomPass")) || "").trim();
-  if (!password) { alert(t("roomNeedsPass")); return; }
+  if (password.length < MIN_PASS) { alert(t("roomNeedsPass")); return; }
   const r = { name, password };
   state.rooms.push(r);
   save();
@@ -640,7 +699,7 @@ $("ctxDelete").onclick = () => {
 };
 
 async function boot() {
-  try { T = await import("./trystero.js?v=6"); } catch { T = null; }
+  try { T = await import("./trystero.js?v=7"); } catch { T = null; }
   if (T && TURN_URL) {
     try {
       const turn = await fetch(TURN_URL).then(r => r.json());
@@ -655,17 +714,37 @@ if (/[?&]debug\b/.test(location.search)) {
   const d = document.createElement("pre");
   d.style.cssText = "position:fixed;left:0;bottom:0;z-index:99;margin:0;padding:4px 6px;font:11px monospace;background:#000c;color:#0f0;pointer-events:none;max-width:100%;white-space:pre-wrap";
   document.body.appendChild(d);
+  let udp = "testando...";
+  try {
+    const pc = new RTCPeerConnection({ iceServers: [{ urls: "stun:stun.cloudflare.com:3478" }] });
+    const seen = new Set();
+    pc.onicecandidate = e => {
+      const m = e.candidate && / typ (\w+)/.exec(e.candidate.candidate);
+      if (m) seen.add(m[1]);
+    };
+    pc.createDataChannel("x");
+    pc.createOffer().then(o => pc.setLocalDescription(o));
+    setTimeout(() => {
+      udp = seen.has("srflx") ? "ok" : seen.size ? "BLOQUEADO (so host)" : "sem candidatos";
+      pc.close();
+    }, 6000);
+  } catch { udp = "sem WebRTC"; }
   setInterval(() => {
     const v = window.visualViewport;
+    let socks = [];
+    try { socks = Object.entries(T.getRelaySockets()); } catch {}
+    const down = socks.filter(([, w]) => w.readyState !== 1).map(([u]) => u.replace(/^wss?:\/\//, "").replace(/\/$/, ""));
     const r = el => { const b = document.querySelector(el).getBoundingClientRect(); return Math.round(b.top) + ".." + Math.round(b.bottom); };
     d.textContent = [
-      "v6",
+      "v7",
       "janela " + innerWidth + "x" + innerHeight,
       "visivel " + (v ? Math.round(v.width) + "x" + Math.round(v.height) + " zoom" + v.scale.toFixed(2) + " topo" + Math.round(v.offsetTop) : "-"),
       "painel " + r(".panel"),
       "digitar " + r(".composer"),
       "mensagens " + box.clientHeight + "/" + box.scrollHeight,
-      "teclado " + $("panel").classList.contains("kb")
+      "teclado " + $("panel").classList.contains("kb"),
+      "relays abertos " + (socks.length - down.length) + "/" + socks.length + (down.length ? " (falham: " + down.slice(0, 4).join(", ") + ")" : ""),
+      "udp/stun " + udp
     ].join(" | ");
   }, 500);
 }
