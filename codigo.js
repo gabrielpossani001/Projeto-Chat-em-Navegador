@@ -161,7 +161,7 @@ const MAX_TEXT = 2000;
 const MAX_ROOM = 40;
 const IMG_MAX = 800;
 const BLOCKED_AFTER_MS = 15000;
-const TURN_URL = "";
+const TURN_URL = "https://gabrielpossani001.github.io/Projeto-Chat-em-Navegador/";
 const ID_RE = /^[A-Za-z0-9][A-Za-z0-9_-]{0,62}[A-Za-z0-9]$/;
 
 const $ = id => document.getElementById(id);
